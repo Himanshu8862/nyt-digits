@@ -1,0 +1,127 @@
+.App {
+    text-align: center;
+}
+
+.font-martin {
+    font-family: 'Martian Mono', monospace;
+}
+
+.font-biz {
+    font-family: 'BIZ UDPMincho', serif;
+}
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+
+}
+
+.container {
+    display: flex;
+    align-items: center; /* Vertically center align items */
+    justify-content: center; /* Horizontally center align items */
+    margin: 15px;
+}
+
+.logo {
+    margin-right: 10px; /* Adjust the margin as needed to create space between the image and h1 */
+    border-radius: 25%;
+}
+
+.text-container {
+    text-align: center; /* Center the text within its container */
+}
+
+
+.title-name{
+    font-size: 48px;
+    margin: 3px;
+}
+
+.the-digit {
+    font-size: 48px;
+}
+
+.real-nyt{
+    font-weight: bold;
+    text-decoration:none;
+    color: #6aaa64;
+}
+
+.numbers .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle {
+    width: 80px;
+    height: 80px;
+    display: table-cell;
+    line-height: 80px;
+    border-radius: 50%;
+    font-size: 32px;
+    border: 3px dashed;
+    cursor: pointer;
+    margin: 7px;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+}
+
+.selected-circle{
+    width: 80px;
+    height: 80px;
+    display: table-cell;
+    line-height: 80px;
+    border-radius: 50%;
+    font-size: 32px;
+    cursor: pointer;
+    margin: 7px;
+    text-align: center;
+    vertical-align: middle;
+    border: 3px solid #6aaa64;
+    background-color: #6aaa64;
+    color: white;
+    user-select: none;
+}
+
+.operation{
+    width: 50px;
+    height: 50px;
+    display: table-cell;
+    line-height: 28px;
+    border-radius: 50%;
+    font-size: 32px;
+    margin: 2px;
+    margin-top: 24px;
+    border: 2px solid;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    background-color: black;
+    vertical-align: middle;
+    user-select: none;
+}
+
+.selected-operation{
+    width: 50px;
+    height: 50px;
+    display: table-cell;
+    line-height: 28px;
+    border-radius: 50%;
+    font-size: 32px;
+    margin: 2px;
+    margin-top: 24px;
+    border: 2px solid;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    background-color: #6aaa64;
+    vertical-align: middle;
+    user-select: none;
+}
+
+
+.undo{
+    background-color: #6aaa64;
+}
