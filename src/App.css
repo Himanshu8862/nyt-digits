@@ -59,7 +59,7 @@
     display: table-cell;
     line-height: 80px;
     border-radius: 50%;
-    font-size: 32px;
+    font-size: var(--circle-font-size, 32px); /* Default font size */
     border: 3px dashed;
     cursor: pointer;
     margin: 7px;
@@ -74,7 +74,7 @@
     display: table-cell;
     line-height: 80px;
     border-radius: 50%;
-    font-size: 32px;
+    font-size: var(--circle-font-size, 32px); /* Default font size */
     cursor: pointer;
     margin: 7px;
     text-align: center;
@@ -91,7 +91,7 @@
     display: table-cell;
     line-height: 80px;
     border-radius: 50%;
-    font-size: 32px;
+    font-size: var(--circle-font-size, 32px); /* Default font size */
     cursor: pointer;
     margin: 7px;
     text-align: center;

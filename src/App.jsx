@@ -88,13 +88,7 @@ function App() {
                     numbers.sort(function (a, b) { return a - b })
                     // console.log(`new numbers: `, numbers);
 
-
                     theSum = Math.max(...numbers)
-                    // if (theSum >= 90) {
-                    //     console.log("theSum: ", theSum);
-                    //     console.log("the final numbers :", numbers);
-                    //     return theSum;
-                    // }
                 }
             }
             theSum = Math.max(...numbers)
@@ -143,7 +137,7 @@ function App() {
         const won = options.includes(digit)
         setGameWon(won)
         // setIsModalOpen(won);
-    }, [options, digit, firstNum, secondNum, selectedOperator])
+    }, [options, digit, firstNum, secondNum, selectedOperator, history])
 
 
     const handleNumClick = (numIdx) => {
@@ -157,11 +151,47 @@ function App() {
     };
 
     const handleOpClick = (op) => {
-        // Select operand only if the first number is selected
-        if (firstNum !== null) {
-            setSelectedOperand(op);
+        if (firstNum !== null || op === "↺") {
+            // If a first number is selected or the "↺" operand is clicked, handle it
+            if (op === "↺") {
+                // Undo the last operation
+                undoOperation();
+            } else {
+                setSelectedOperand(op);
+            }
         }
     };
+
+    // revert the history and options when undo is clicked
+    const undoOperation = () => {
+        // console.log("Perform Undo")
+        // if history is null, set all three to null
+        if (history.length === 0) {
+            setFirstNum(null);
+            setSecondNum(null);
+            setSelectedOperand(null);
+        }
+        // else revert history
+        else {
+            // pop from history
+            const { idx1, idx2, num1, num2, selectedOperator, result } = history.pop();
+            // console.log(idx1, idx2, num1, num2, selectedOperator, result);
+
+            // update the options array
+            options[idx1] = num1
+            options[idx2] = num2
+
+            // set all three to null
+            setFirstNum(null);
+            setSecondNum(null);
+            setSelectedOperand(null);
+
+            // update history
+            setHistory([...history])
+
+        }
+
+    }
 
     // Perform the operation on selected numbers
     const performOperation = () => {
@@ -174,7 +204,7 @@ function App() {
                     break;
                 case "-":
                     if (options[firstNum] <= options[secondNum]) {
-                        console.log("Invalid subtraction operation")
+                        // console.log("Invalid subtraction operation")
                         setFirstNum(null);
                         setSecondNum(null);
                         setSelectedOperand(null);
@@ -189,7 +219,7 @@ function App() {
                     if (options[secondNum] !== 0 && options[firstNum] % options[secondNum] === 0) {
                         result = options[firstNum] / options[secondNum];
                     } else {
-                        console.log("Invalid division operation");
+                        // console.log("Invalid division operation");
                         setFirstNum(null);
                         setSecondNum(null);
                         setSelectedOperand(null);
@@ -211,7 +241,7 @@ function App() {
             setHistory([...history, { idx1: firstNum, idx2: secondNum, num1: options[firstNum], num2: options[secondNum], selectedOperator, result }]);
 
 
-            console.log(`Result of ${options[firstNum]} ${selectedOperator} ${options[secondNum]} = ${result}`);
+            // console.log(`Result of ${options[firstNum]} ${selectedOperator} ${options[secondNum]} = ${result}`);
 
             // result should take place of second number, first number should be invisible
             options[firstNum] = null;
@@ -231,9 +261,26 @@ function App() {
             setSecondNum(null);
             setSelectedOperand(null);
         } else {
-            console.log("Please select all three inputs to perform an operation.");
+            // console.log("Please select all three inputs to perform an operation.");
         }
     };
+
+    function getCircleFontSize(num) {
+        const numberLength = num ? num.toString().length : 0;
+
+        // Define font size values based on number length
+        if (numberLength >= 7) {
+            return '16px';
+        } else if (numberLength >= 6) {
+            return '17px';
+        } else if (numberLength >= 5) {
+            return '22px';
+        } else if (numberLength >= 4) {
+            return '27px';
+        } else {
+            return '32px';
+        }
+    }
 
     return (
         <>
@@ -267,7 +314,7 @@ function App() {
                                 ${digit === options[0] ? "win-circle" : ""}`}
                                 key={uuidv4()}
                                 onClick={() => handleNumClick(0)}
-                                style={{ visibility: options[0] === undefined || options[0] === null ? 'hidden' : 'visible' }}
+                                style={{ visibility: options[0] === undefined || options[0] === null ? 'hidden' : 'visible', '--circle-font-size': getCircleFontSize(options[0]) }}
                             >
                                 {options[0]}
                             </b>
@@ -276,7 +323,7 @@ function App() {
                                 ${digit === options[1] ? "win-circle" : ""}`}
                                 key={uuidv4()}
                                 onClick={() => handleNumClick(1)}
-                                style={{ visibility: options[1] === undefined || options[1] === null ? 'hidden' : 'visible' }}
+                                style={{ visibility: options[1] === undefined || options[1] === null ? 'hidden' : 'visible', '--circle-font-size': getCircleFontSize(options[1]) }}
                             >
                                 {options[1]}
                             </b>
@@ -285,7 +332,7 @@ function App() {
                                 ${digit === options[2] ? "win-circle" : ""}`}
                                 key={uuidv4()}
                                 onClick={() => handleNumClick(2)}
-                                style={{ visibility: options[2] === undefined || options[2] === null ? 'hidden' : 'visible' }}
+                                style={{ visibility: options[2] === undefined || options[2] === null ? 'hidden' : 'visible', '--circle-font-size': getCircleFontSize(options[2]) }}
                             >
                                 {options[2]}
                             </b>
@@ -296,7 +343,7 @@ function App() {
                                 ${digit === options[3] ? "win-circle" : ""}`}
                                 key={uuidv4()}
                                 onClick={() => handleNumClick(3)}
-                                style={{ visibility: options[3] === undefined || options[3] === null ? 'hidden' : 'visible' }}
+                                style={{ visibility: options[3] === undefined || options[3] === null ? 'hidden' : 'visible', '--circle-font-size': getCircleFontSize(options[3]) }}
                             >
                                 {options[3]}
                             </b>
@@ -305,7 +352,7 @@ function App() {
                                 ${digit === options[4] ? "win-circle" : ""}`}
                                 key={uuidv4()}
                                 onClick={() => handleNumClick(4)}
-                                style={{ visibility: options[4] === undefined || options[4] === null ? 'hidden' : 'visible' }}
+                                style={{ visibility: options[4] === undefined || options[4] === null ? 'hidden' : 'visible', '--circle-font-size': getCircleFontSize(options[4]) }}
                             >
                                 {options[4]}
                             </b>
@@ -314,7 +361,7 @@ function App() {
                                 ${digit === options[5] ? "win-circle" : ""}`}
                                 key={uuidv4()}
                                 onClick={() => handleNumClick(5)}
-                                style={{ visibility: options[5] === undefined || options[5] === null ? 'hidden' : 'visible' }}
+                                style={{ visibility: options[5] === undefined || options[5] === null ? 'hidden' : 'visible', '--circle-font-size': getCircleFontSize(options[5]) }}
                             >
                                 {options[5]}
                             </b>}
